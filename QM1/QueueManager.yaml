@@ -28,13 +28,13 @@ spec:
       - configMap:
           items:
             - script.mqsc
-          name: qm1-config
+          name: mq-qm1-config
   version: 9.3.4.0-r1
   pki:
     keys:
       - name: default
         secret:
-          secretName: qm1-tls
+          secretName: mq-qm1-tls
           items:
             - tls.key
             - tls.crt
