@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: qm1-config
+  name: mq-qm1-config
   namespace: NAMESPACE
 data:
   script.mqsc: |
