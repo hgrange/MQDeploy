@@ -16,7 +16,7 @@ spec:
       type: NativeHA
     name: QM1
     storage:
-      defaultClass: ${SC_BLOCK}
+      defaultClass: SC_BLOCK
       queueManager:
         type: persistent-claim
     ini:
