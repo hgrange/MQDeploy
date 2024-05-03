@@ -1,1 +1,55 @@
+apiVersion: mq.ibm.com/v1beta1
+kind: QueueManager
+metadata:
+  annotations:
+    com.ibm.mq/write-defaults-spec: 'false'
+  name: qm1
+  namespace: $NAMESPACE
+spec:
+  license:
+    accept: true
+    license: L-VTPK-22YZPK
+    use: NonProduction
+    metric: VirtualProcessorCore
+  queueManager:
+    availability:
+      type: NativeHA
+    name: QM1
+    storage:
+      defaultClass: ${SC_BLOCK}
+      queueManager:
+        type: persistent-claim
+    ini:
+      - configMap:
+          items:
+            - tls.ini
+          name: qm1-config
+    mqsc:
+      - configMap:
+          items:
+            - script.mqsc
+          name: qm1-config
+  version: 9.3.4.0-r1
+  pki:
+    keys:
+      - name: default
+        secret:
+          secretName: qm1-tls
+          items:
+            - tls.key
+            - tls.crt
+            - ca.crt
+  web:
+    console:
+      authentication:
+        provider: integration-keycloak
+        enabled: true
+      authorization:
+        provider: integration-keycloak
+        enabled: true
+    enabled: true
+  telemetry:
+    tracing:
+      instana:
+        enabled: true
 
