@@ -1,3 +1,4 @@
+oc project NAMESPACE
 # Create a private key to use for your internal certificate authority
 mkdir -p MQ/tls
 openssl genpkey -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -out MQ/tls/ca.key
@@ -27,5 +28,6 @@ openssl pkcs12 -export -in "MQ/tls/app1.crt" -name "app1" -certfile "MQ/tls/ca.c
 openssl pkcs12 -export -in "MQ/tls/mqm.crt" -name "mqm" -certfile "MQ/tls/ca.crt" -inkey "MQ/tls/mqm.key" -out "MQ/tls/mqm.p12" -passout pass:password
 oc delete secret mq-app1-tl
 oc create secret generic mq-app1-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/app1.key --from-file=tls.crt=MQ/tls/app1.crt --from-file=ca.crt=MQ/tls/ca.crt --from-file=tls.p12=MQ/tls/app1.p12
+oc delete queuemanager qm1
 oc delete secret mq-mqm-tls
 oc create secret generic mq-mqm-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/mqm.key --from-file=tls.crt=MQ/tls/mqm.crt --from-file=ca.crt=MQ/tls/ca.crt --from-file=tls.p12=MQ/tls/mqm.p12
