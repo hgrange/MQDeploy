@@ -4,7 +4,7 @@ metadata:
   annotations:
     com.ibm.mq/write-defaults-spec: 'false'
   name: qm1
-  namespace: $NAMESPACE
+  namespace: NAMESPACE
 spec:
   license:
     accept: true
