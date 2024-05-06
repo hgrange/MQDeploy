@@ -34,7 +34,7 @@ spec:
     keys:
       - name: default
         secret:
-          secretName: mq-qm1-tls
+          secretName: mq-mqm-tls
           items:
             - tls.key
             - tls.crt
