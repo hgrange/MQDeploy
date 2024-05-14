@@ -28,7 +28,7 @@ spec:
       - configMap:
           items:
             - script.mqsc
-          name: mq-qm1-config
+          name: qm1-config
   version: 9.3.4.0-r1
   pki:
     keys:
