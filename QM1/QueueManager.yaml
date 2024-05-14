@@ -23,7 +23,7 @@ spec:
       - configMap:
           items:
             - tls.ini
-          name: mq-qm1-config
+          name: qm1-config
     mqsc:
       - configMap:
           items:
