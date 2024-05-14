@@ -7,14 +7,14 @@ openssl genpkey -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -out MQ/tls/ca.key
 openssl req -x509 -new -nodes -key MQ/tls/ca.key -sha512 -days 397 -subj "/CN=selfsigned-ca" -out MQ/tls/ca.crt
 
 # Create a private key and certificate signing request for a queue manager
-openssl req -new -nodes -out MQ/tls/qm1.csr -newkey rsa:4096 -keyout MQ/tls/qm1.key -subj '/CN=CN=66276a8f7e0fed001ed97497.cloud.techzone.ibm.com'
+openssl req -new -nodes -out MQ/tls/qm1.csr -newkey rsa:4096 -keyout MQ/tls/qm1.key -subj '/CN=66276a8f7e0fed001ed97497.cloud.techzone.ibm.com'
 
 # Sign the queue manager key with your internal certificate authority
 openssl x509 -req -in MQ/tls/qm1.csr -CA MQ/tls/ca.crt -CAkey MQ/tls/ca.key -CAcreateserial -out MQ/tls/qm1.crt -days 396 -sha512
 
 # Create a Kubernetes secret with the queue manager key and certificate
 oc delete secret mq-qm1-tls
-oc create secret generic qm1-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/qm1.key --from-file=tls.crt=MQ/tls/qm1.crt --from-file=ca.crt=MQ/tls/ca.crt
+oc create secret generic qm1-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/qm1.key --from-file=tls.crt=MQ/tls/qm1.crt --from-file=ca.crt=MQ/tls/ca.crt 
 
 #Create a private key and certificate signing request for an application
 openssl req -new -nodes -out MQ/tls/app1.csr -newkey rsa:4096 -keyout MQ/tls/app1.key -subj '/CN=app1'
