@@ -7,7 +7,7 @@ openssl genpkey -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -out MQ/tls/ca.key
 openssl req -x509 -new -nodes -key MQ/tls/ca.key -sha512 -days 397 -subj "/CN=selfsigned-ca" -out MQ/tls/ca.crt
 
 # Create a private key and certificate signing request for a queue manager
-openssl req -new -nodes -out MQ/tls/qm1.csr -newkey rsa:4096 -keyout MQ/tls/qm1.key -subj '/CN=qm1-ibm-mq-qm-cp4i.apps.66276a8f7e0fed001ed97497.cloud.techzone.ibm.com'
+openssl req -new -nodes -out MQ/tls/qm1.csr -newkey rsa:4096 -keyout MQ/tls/qm1.key -subj '/CN=QM1' -addext "subjectAltName = DNS:registryqm1-ibm-mq-qm-cp4i.apps.66276a8f7e0fed001ed97497.cloud.techzone.ibm.com"
 
 # Sign the queue manager key with your internal certificate authority
 openssl x509 -req -in MQ/tls/qm1.csr -CA MQ/tls/ca.crt -CAkey MQ/tls/ca.key -CAcreateserial -out MQ/tls/qm1.crt -days 396 -sha512
