@@ -1,0 +1,223 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: mqtt
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/component: integration
+    app.kubernetes.io/instance: mqtt
+    app.kubernetes.io/name: ibm-mq
+    app.kubernetes.io/version: 9.3.4.0
+spec:
+  serviceName: qm
+  revisionHistoryLimit: 10
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  volumeClaimTemplates:
+    - kind: PersistentVolumeClaim
+      apiVersion: v1
+      metadata:
+        name: data
+        namespace: NAMESPACE
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: integration
+          app.kubernetes.io/instance: orders
+          app.kubernetes.io/name: ibm-mq
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 2Gi
+        volumeMode: Filesystem
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: integration
+        app.kubernetes.io/instance: mqtt
+        app.kubernetes.io/name: ibm-mq
+        app.kubernetes.io/version: 9.3.4.0
+      annotations:
+        cloudpakId: c8b82d189e7545f0892db9ef2731b90d
+        productVersion: 9.3.4.0
+        productID: 21dfe9a0f00f444f888756d835334909
+        cloudpakName: IBM Cloud Pak for Integration
+        productChargedContainers: qmgr
+        productCloudpakRatio: '4:1'
+        productName: IBM MQ Advanced for Non-Production
+        productMetric: VIRTUAL_PROCESSOR_CORE
+    spec:
+      restartPolicy: Always
+      serviceAccountName: orders-ibm-mq
+      schedulerName: default-scheduler
+      affinity: {}
+      terminationGracePeriodSeconds: 30
+      securityContext: {}
+      containers:
+        - resources:
+            limits:
+              cpu: '1'
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 1Gi
+          readinessProbe:
+            exec:
+              command:
+                - chkmqready
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 1
+          terminationMessagePath: /run/termination-log
+          name: qmgr
+          livenessProbe:
+            exec:
+              command:
+                - chkmqhealthy
+            initialDelaySeconds: 90
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 1
+          env:
+            - name: LICENSE
+              value: accept
+            - name: MQ_QMGR_NAME
+              value: MQTT
+            - name: MQ_MULTI_INSTANCE
+              value: 'false'
+            - name: MQ_ENABLE_METRICS
+              value: 'true'
+            - name: MQ_ENABLE_EMBEDDED_WEB_SERVER
+              value: 'true'
+            - name: MQ_LOGGING_CONSOLE_FORMAT
+              value: basic
+            - name: DEBUG
+              value: 'false'
+            - name: MQ_ENABLE_TRACE_STRMQM
+              value: 'false'
+            - name: MQ_EPHEMERAL_PREFIX
+              value: /run/mqm
+            - name: MQ_GRACE_PERIOD
+              value: '29'
+            - name: MQ_NATIVE_HA
+              value: 'false'
+            - name: MQ_GENERATE_CERTIFICATE_HOSTNAME
+              value: mqtt-ibm-mq-web-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com
+            - name: MQ_CONSOLE_DEFAULT_CCDT_HOSTNAME
+              value: mqtt-ibm-mq-qm-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com
+            - name: MQ_CONSOLE_DEFAULT_CCDT_PORT
+              value: '443'
+            - name: MQ_OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-client-secret-orders-ibm-mq
+                  key: CLIENT_ID
+            - name: MQ_OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-client-secret-orders-ibm-mq
+                  key: CLIENT_SECRET
+            - name: MQ_OIDC_DISCOVERY_ENDPOINT_URL
+              value: 'https://cpfs-opcon-cs-keycloak-service.cp4i.svc:8443/realms/cloudpak/.well-known/openid-configuration'
+            - name: MQ_KEYCLOAK_ENDPOINT_URL
+              value: 'https://keycloak-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com/realms/cloudpak'
+            - name: MQ_CP4I_SERVICES_URL
+              value: 'https://icp4i-services-cp4i.cp4i.svc:3000'
+            - name: MQ_ENABLE_OPEN_TRACING
+              value: 'false'
+            - name: MQ_ENABLE_INSTANA_TRACING
+              value: 'false'
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            runAsNonRoot: true
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          ports:
+            - containerPort: 1414
+              protocol: TCP
+            - containerPort: 1833
+              protocol: TCP
+            - containerPort: 9157
+              protocol: TCP
+            - containerPort: 9443
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: data
+              mountPath: /mnt/mqm
+            - name: cm-mqtt-config
+              readOnly: true
+              mountPath: /etc/mqm/script.mqsc
+              subPath: script.mqsc
+            - name: keycloak-web-config
+              readOnly: true
+              mountPath: /etc/mqm/web/installations/Installation1/servers/mqweb/mqwebexternal.xml
+              subPath: mqwebexternal.xml
+            - name: keycloak-certificate
+              mountPath: /etc/mqm/pki/trust/keycloak
+            - name: openshift-service-ca
+              mountPath: /etc/mqm/pki/trust/openshift-service-ca
+          terminationMessagePolicy: File
+          image: 'IMAGE_REFERENCE'
+      serviceAccount: orders-ibm-mq
+      volumes:
+      - name: default
+        secret:
+          secretName: qm1-tls
+          items:
+            - key: tls.key
+              path: tls.key
+            - key: tls.crt
+              path: tls.crt
+              - key: ca.crt
+              path: ca.crt
+          defaultMode: 288
+      - name: cm-mqtt-config
+          configMap:
+            name: mqtt-config
+            items:
+              - key: script.mqsc
+                path: script.mqsc
+            defaultMode: 420
+      - name: keycloak-web-config
+          configMap:
+            name: orders-ibm-mq-web-keycloak
+            items:
+              - key: mqwebexternal.xml
+                path: mqwebexternal.xml
+            defaultMode: 420
+      - name: keycloak-certificate
+          secret:
+            secretName: keycloak-bindinfo-cs-keycloak-tls-secret
+            items:
+              - key: ca.crt
+                path: keycloak-certificate.crt
+            defaultMode: 420
+      - name: openshift-service-ca
+          configMap:
+            name: openshift-service-ca.crt
+            items:
+              - key: service-ca.crt
+                path: openshift-service-ca.crt
+            defaultMode: 420
+      dnsPolicy: ClusterFirst
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: integration
+      app.kubernetes.io/instance: mqtt
+      app.kubernetes.io/name: ibm-mq
