@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/name: ibm-mq
     app.kubernetes.io/version: 9.3.4.0
 spec:
-  host: mqtt-ibm-mq-qm-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com
+  host: mqtt-ibm-mq-mqtt-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com
   to:
     kind: Service
     name: mqtt-ibm-mq
