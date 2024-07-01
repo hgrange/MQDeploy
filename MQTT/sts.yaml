@@ -186,7 +186,7 @@ spec:
         name: mqtt-config
         items:
           - key: script.mqsc
-             path: script.mqsc
+            path: script.mqsc
         defaultMode: 420
       - name: keycloak-web-config
       configMap:
