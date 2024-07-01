@@ -163,6 +163,8 @@ spec:
             items:
               - key: script.mqsc
                 path: script.mqsc
+              - key: tls.ini
+                path: tls.ini
             defaultMode: 420
         - name: openshift-service-ca
           configMap:
