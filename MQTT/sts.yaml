@@ -12,7 +12,7 @@ spec:
   serviceName: qm
   revisionHistoryLimit: 10
   persistentVolumeClaimRetentionPolicy:
-    whenDeleted: Retain
+    whenDeleted: Delete
     whenScaled: Retain
   volumeClaimTemplates:
     - kind: PersistentVolumeClaim
