@@ -19,9 +19,9 @@ spec:
       port: 1414
       targetPort: 1414
     - name: mqtt
-      port: 1833
+      port: 1883
       protocol: TCP
-      nodePort: 31833
+      nodePort: 31883
   type: NodePort
   sessionAffinity: None
   selector:
