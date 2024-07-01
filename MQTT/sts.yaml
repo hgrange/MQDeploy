@@ -1,7 +1,7 @@
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
-  name: mqtt
+  name: mqtt-ibm-mq
   namespace: NAMESPACE
   labels:
     app.kubernetes.io/component: integration
@@ -115,20 +115,6 @@ spec:
               value: mqtt-ibm-mq-qm-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com
             - name: MQ_CONSOLE_DEFAULT_CCDT_PORT
               value: '443'
-            - name: MQ_OIDC_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak-client-secret-mqtt-ibm-mq
-                  key: CLIENT_ID
-            - name: MQ_OIDC_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak-client-secret-mqtt-ibm-mq
-                  key: CLIENT_SECRET
-            - name: MQ_OIDC_DISCOVERY_ENDPOINT_URL
-              value: 'https://cpfs-opcon-cs-keycloak-service.cp4i.svc:8443/realms/cloudpak/.well-known/openid-configuration'
-            - name: MQ_KEYCLOAK_ENDPOINT_URL
-              value: 'https://keycloak-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com/realms/cloudpak'
             - name: MQ_CP4I_SERVICES_URL
               value: 'https://icp4i-services-cp4i.cp4i.svc:3000'
             - name: MQ_ENABLE_OPEN_TRACING
@@ -160,17 +146,17 @@ spec:
               readOnly: true
               mountPath: /etc/mqm/script.mqsc
               subPath: script.mqsc
-            - name: keycloak-web-config
-              readOnly: true
-              mountPath: /etc/mqm/web/installations/Installation1/servers/mqweb/mqwebexternal.xml
-              subPath: mqwebexternal.xml
-            - name: keycloak-certificate
-              mountPath: /etc/mqm/pki/trust/keycloak
-            - name: openshift-service-ca
-              mountPath: /etc/mqm/pki/trust/openshift-service-ca
           terminationMessagePolicy: File
           image: 'IMAGE_REFERENCE'
       serviceAccount: mqtt-ibm-mq
+      volumes:
+        - name: cm-mqtt-ibm-mq-web
+          configMap:
+            name: mqtt-ibm-mq-web
+            items:
+              - key: mqwebuser.xml
+                path: mqwebuser.xml
+            defaultMode: 432
       volumes:
       - name: default
         secret:
