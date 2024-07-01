@@ -133,7 +133,11 @@ spec:
             - name: cm-mqtt-config
               readOnly: true
               mountPath: /etc/mqm/qm-service-component.ini
-              subPath: qm-service-component.ini  
+              subPath: qm-service-component.ini
+            - name: cm-mqtt-config
+              readOnly: true
+              mountPath: /etc/mqm/10-dev.mqsc
+              subPath: 10-dev.mqsc  
           terminationMessagePolicy: File
           image: 'IMAGE_REFERENCE'
       serviceAccount: mqtt-ibm-mq
@@ -169,6 +173,8 @@ spec:
                 path: tls.ini
               - key: qm-service-component.ini
                 path: qm-service-component.ini
+              - key: 10-dev.mqsc
+                path: 10-dev.mqsc
             defaultMode: 420
         - name: openshift-service-ca
           configMap:
