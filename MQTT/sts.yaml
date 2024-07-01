@@ -203,12 +203,12 @@ spec:
                 path: keycloak-certificate.crt
             defaultMode: 420
       - name: openshift-service-ca
-      configMap:
-        name: openshift-service-ca.crt
-        items:
-          - key: service-ca.crt
-            path: openshift-service-ca.crt
-        defaultMode: 420
+        configMap:
+          name: openshift-service-ca.crt
+          items:
+            - key: service-ca.crt
+              path: openshift-service-ca.crt
+          defaultMode: 420
       dnsPolicy: ClusterFirst
   podManagementPolicy: OrderedReady
   replicas: 1
