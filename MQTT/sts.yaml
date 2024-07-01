@@ -11,28 +11,6 @@ metadata:
 spec:
   serviceName: qm
   revisionHistoryLimit: 10
-  persistentVolumeClaimRetentionPolicy:
-    whenDeleted: Delete
-    whenScaled: Retain
-  volumeClaimTemplates:
-    - kind: PersistentVolumeClaim
-      apiVersion: v1
-      metadata:
-        name: data
-        namespace: NAMESPACE
-        creationTimestamp: null
-        labels:
-          app.kubernetes.io/component: integration
-          app.kubernetes.io/instance: mqtt
-          app.kubernetes.io/name: ibm-mq
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 2Gi
-          storageClassName: SC_BLOCK
-          volumeMode: Filesystem
   template:
     metadata:
       creationTimestamp: null
@@ -53,26 +31,6 @@ spec:
     spec:
       restartPolicy: Always
       serviceAccountName: mqtt-ibm-mq
-      persistentVolumeClaimRetentionPolicy:
-        whenDeleted: Retain
-        whenScaled: Retain
-      volumeClaimTemplates:
-        - kind: PersistentVolumeClaim
-          apiVersion: v1
-          metadata:
-            name: data
-            namespace: cp4i
-          labels:
-            app.kubernetes.io/component: integration
-            app.kubernetes.io/instance: mqtt
-            app.kubernetes.io/name: ibm-mq
-          spec:
-            accessModes:
-              - ReadWriteOnce
-            resources:
-              requests:
-                storage: 2Gi
-            volumeMode: Filesystem
       schedulerName: default-scheduler
       affinity: {}
       terminationGracePeriodSeconds: 30
@@ -178,6 +136,9 @@ spec:
           image: 'IMAGE_REFERENCE'
       serviceAccount: mqtt-ibm-mq
       volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data-mqtt-ibm-mq-0
         - name: cm-mqtt-ibm-mq-web
           configMap:
             name: mqtt-ibm-mq-web
