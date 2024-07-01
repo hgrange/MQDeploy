@@ -196,12 +196,12 @@ spec:
               path: mqwebexternal.xml
           defaultMode: 420
       - name: keycloak-certificate
-          secret:
-            secretName: keycloak-bindinfo-cs-keycloak-tls-secret
-            items:
-              - key: ca.crt
-                path: keycloak-certificate.crt
-            defaultMode: 420
+        secret:
+          secretName: keycloak-bindinfo-cs-keycloak-tls-secret
+          items:
+           - key: ca.crt
+             path: keycloak-certificate.crt
+          defaultMode: 420
       - name: openshift-service-ca
         configMap:
           name: openshift-service-ca.crt
