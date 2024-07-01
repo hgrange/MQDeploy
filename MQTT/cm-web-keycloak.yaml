@@ -1,0 +1,54 @@
+apiVersion: v1
+data:
+  mqwebexternal.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <server>
+        <featureManager>
+            <feature>openidConnectClient-1.0</feature>
+        </featureManager>
+        <enterpriseApplication id="com.ibm.mq.console">
+            <application-bnd>
+                <security-role name="MQWebAdmin">
+                    <group name="admins" access-id="group:integration/admin"/>
+                    <group name="admins" access-id="group:integration/queuemanager-webadmin"/>
+                    <group name="admins" access-id="group:integration/webadmin"/>
+                </security-role>
+                <security-role name="MQWebAdminRO">
+                    <group name="readers" access-id="group:integration/queuemanager-webadminro"/>
+                    <group name="readers" access-id="group:integration/webadminro"/>
+                </security-role>
+                <security-role name="MQWebUser">
+                    <group name="users" access-id="group:integration/queuemanager-webuser"/>
+                    <group name="users" access-id="group:integration/webuser"/>
+                </security-role>
+            </application-bnd>
+        </enterpriseApplication>
+        <authFilter id="integrationKeycloak">
+            <webApp id="com.ibm.mq.console" name="com.ibm.mq.console" matchType="equals"/>
+        </authFilter>
+        <openidConnectClient id="mqclient"
+            authFilterRef="integrationKeycloak"
+            disableLtpaCookie="true"
+            jwtAccessTokenRemoteValidation="require"
+            clientId="${env.MQ_OIDC_CLIENT_ID}"
+            clientSecret="${env.MQ_OIDC_CLIENT_SECRET}"
+            scope="openid profile"
+            signatureAlgorithm="RS256"
+            groupIdentifier="effective-roles"
+            userIdentifier="preferred_username"
+            realmName="integration"
+            discoveryEndpointUrl="${env.MQ_OIDC_DISCOVERY_ENDPOINT_URL}">
+        </openidConnectClient>
+        <jndiEntry jndiName="icp4iPlatformServicesUrl" value="${env.MQ_CP4I_SERVICES_URL}/v1"/>
+        <jndiEntry jndiName="integrationKeycloakUrl" value="${env.MQ_KEYCLOAK_ENDPOINT_URL}"/>
+    </server>
+kind: ConfigMap
+metadata:
+  annotations:
+  labels:
+    app.kubernetes.io/component: integration
+    app.kubernetes.io/instance: qm1
+    app.kubernetes.io/name: ibm-mq
+    app.kubernetes.io/version: 9.3.4.0
+  name: mqtt-ibm-mq-web-keycloak
+  namespace: cp4i
