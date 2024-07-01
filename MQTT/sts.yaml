@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/component: integration
     app.kubernetes.io/instance: mqtt
     app.kubernetes.io/name: ibm-mq
-    app.kubernetes.io/version: 9.3.4.0
+    app.kubernetes.io/version: 9.4.0.0
 spec:
   serviceName: qm
   revisionHistoryLimit: 10
@@ -18,10 +18,10 @@ spec:
         app.kubernetes.io/component: integration
         app.kubernetes.io/instance: mqtt
         app.kubernetes.io/name: ibm-mq
-        app.kubernetes.io/version: 9.3.4.0
+        app.kubernetes.io/version: 9.4.0.0
       annotations:
         cloudpakId: c8b82d189e7545f0892db9ef2731b90d
-        productVersion: 9.3.4.0
+        productVersion: 9.4.0.0
         productID: 21dfe9a0f00f444f888756d835334909
         cloudpakName: IBM Cloud Pak for Integration
         productChargedContainers: qmgr
