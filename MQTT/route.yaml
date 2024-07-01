@@ -1,7 +1,7 @@
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: mqtt-ibm-mq-qm
+  name: mqtt-ibm-mq-qmtt
   namespace: cp4i
 
   labels:
@@ -13,7 +13,7 @@ spec:
   host: mqtt-ibm-mq-qm-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com
   to:
     kind: Service
-    name: mqtt-ibm-mq
+    name: mqtt-ibm-mq-mqtt
     weight: 100
   port:
     targetPort: 1833
