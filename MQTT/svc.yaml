@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mqtt-ibm-mq
+  namespace: cp4i
+  labels:
+    app.kubernetes.io/component: integration
+    app.kubernetes.io/instance: mqtt
+    app.kubernetes.io/name: ibm-mq
+    app.kubernetes.io/version: 9.3.4.0
+spec:
+  ports:
+    - name: console-https
+      protocol: TCP
+      port: 9443
+      targetPort: 9443
+    - name: qmgr
+      protocol: TCP
+      port: 1414
+      targetPort: 1414
+    - name: mqtt
+      port: 1833
+      protocol: TCP
+      nodePort: 31833
+  type: NodePort
+  sessionAffinity: None
+  selector:
+    app.kubernetes.io/component: integration
+    app.kubernetes.io/instance: mqtt
+    app.kubernetes.io/name: ibm-mq
+
