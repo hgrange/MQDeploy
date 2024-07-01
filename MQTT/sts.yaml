@@ -138,7 +138,7 @@ spec:
               readOnly: false
               mountPath: /etc/mqm/10-dev.mqsc
               subPath: 10-dev.mqsc
-             - name: cm-mqtt-config
+            - name: cm-mqtt-config
               readOnly: false
               mountPath: /etc/mqm/20-dev-tls.mqsc
               subPath: 20-dev-tls.mqsc  
