@@ -1,7 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: mqwebuserconfigmap
+  name: mqtt-ibm-mq-web
   namespace: NAMESPACE
 data:
   mqwebuser.xml: |
