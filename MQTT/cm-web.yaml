@@ -19,9 +19,9 @@ data:
         </application-bnd>
       </enterpriseApplication>
       <basicRegistry id="basic" realm="defaultRealm">
-        <user name="USERNAME" password="PASSWORD"/>
+        <user name="mqadmin" password="mqadmin"/>
         <group name="MQWebAdminGroup">
-          <member name="USERNAME"/>
+          <member name="mqadmin"/>
         </group>
       </basicRegistry>           
       <sslDefault sslRef="mqDefaultSSLConfig"/>
