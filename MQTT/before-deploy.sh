@@ -30,7 +30,7 @@ openssl pkcs12 -export -in "MQ/tls/mqm.crt" -name "ibmwebspheremqmqtt" -certfile
 openssl pkcs12 -export -in "MQ/tls/mqtt.crt" -name "ibmwebspheremqmqtt" -certfile "MQ/tls/ca.crt" -inkey "MQ/tls/mqtt.key" -out "MQ/tls/mqtt.p12" -passout pass:password
 oc delete secret mqtt-app1-tls
 oc create secret generic mqtt-app1-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/app1.key --from-file=tls.crt=MQ/tls/app1.crt --from-file=ca.crt=MQ/tls/ca.crt --from-file=tls.p12=MQ/tls/app1.p12 --from-literal password=password
-oc delete sts mqtt
+oc delete sts mqtt-ibm-mq
 oc delete secret mqtt-mqm-tls
 oc create secret generic mqtt-mqm-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/mqm.key --from-file=tls.crt=MQ/tls/mqm.crt --from-file=ca.crt=MQ/tls/ca.crt --from-file=tls.p12=MQ/tls/mqm.p12 --from-literal password=password
 oc delete service mqtt-ibm-mq 
