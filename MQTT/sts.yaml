@@ -54,7 +54,7 @@ spec:
             failureThreshold: 1
           terminationMessagePath: /run/termination-log
           name: qmgr
-          # command: ["sleep"]
+          command: ["/usr/local/bin/runmqserver"]
           # args: ["999999999"]
           livenessProbe:
             exec:
