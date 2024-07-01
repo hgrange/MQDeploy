@@ -52,6 +52,26 @@ spec:
     spec:
       restartPolicy: Always
       serviceAccountName: mqtt-ibm-mq
+      persistentVolumeClaimRetentionPolicy:
+        whenDeleted: Retain
+        whenScaled: Retain
+      volumeClaimTemplates:
+        - kind: PersistentVolumeClaim
+          apiVersion: v1
+          metadata:
+            name: data
+            namespace: cp4i
+          labels:
+            app.kubernetes.io/component: integration
+            app.kubernetes.io/instance: mqtt
+            app.kubernetes.io/name: ibm-mq
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 2Gi
+          volumeMode: Filesystem
       schedulerName: default-scheduler
       affinity: {}
       terminationGracePeriodSeconds: 30
@@ -140,12 +160,19 @@ spec:
               protocol: TCP
           imagePullPolicy: IfNotPresent
           volumeMounts:
+            - name: tlsdefault
+              readOnly: true
+              mountPath: /etc/mqm/pki/keys/default
             - name: data
               mountPath: /mnt/mqm
             - name: cm-mqtt-config
               readOnly: true
               mountPath: /etc/mqm/script.mqsc
               subPath: script.mqsc
+            - name: cm-mqtt-config
+              readOnly: true
+              mountPath: /etc/mqm/tls.ini
+              subPath: tls.ini
           terminationMessagePolicy: File
           image: 'IMAGE_REFERENCE'
       serviceAccount: mqtt-ibm-mq
@@ -157,46 +184,31 @@ spec:
               - key: mqwebuser.xml
                 path: mqwebuser.xml
             defaultMode: 432
-      volumes:
-      - name: default
-        secret:
-          secretName: mqtt-tls
-          items:
-            - key: tls.key
-              path: tls.key
-            - key: tls.crt
-              path: tls.crt
-            - key: ca.crt
-              path: ca.crt
-          defaultMode: 288
-      - name: cm-mqtt-config
-        configMap:
-          name: mqtt-config
-          items:
-            - key: script.mqsc
-              path: script.mqsc
-          defaultMode: 420
-      - name: keycloak-web-config
-        configMap:
-          name: mqtt-ibm-mq-web-keycloak
-          items:
-            - key: mqwebexternal.xml
-              path: mqwebexternal.xml
-          defaultMode: 420
-      - name: keycloak-certificate
-        secret:
-          secretName: keycloak-bindinfo-cs-keycloak-tls-secret
-          items:
-           - key: ca.crt
-             path: keycloak-certificate.crt
-          defaultMode: 420
-      - name: openshift-service-ca
-        configMap:
-          name: openshift-service-ca.crt
-          items:
-            - key: service-ca.crt
-              path: openshift-service-ca.crt
-          defaultMode: 420
+        - name: tlsdefault
+          secret:
+            secretName: mqtt-tls
+            items:
+              - key: tls.key
+                path: tls.key
+              - key: tls.crt
+                path: tls.crt
+              - key: ca.crt
+                path: ca.crt
+            defaultMode: 288
+        - name: cm-mqtt-config
+          configMap:
+            name: mqtt-config
+            items:
+              - key: script.mqsc
+                path: script.mqsc
+            defaultMode: 420
+        - name: openshift-service-ca
+          configMap:
+            name: openshift-service-ca.crt
+            items:
+              - key: service-ca.crt
+                path: openshift-service-ca.crt
+            defaultMode: 420
       dnsPolicy: ClusterFirst
   podManagementPolicy: OrderedReady
   replicas: 1
