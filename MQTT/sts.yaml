@@ -142,6 +142,9 @@ spec:
               readOnly: false
               mountPath: /etc/mqm/20-dev-tls.mqsc
               subPath: 20-dev-tls.mqsc  
+            - name: cm-mqtt-config
+              mountPath: /opt/mqm/mqxr/config/mqxr_unix.properties
+              subPath: mqxr_unix.properties         
           terminationMessagePolicy: File
           image: 'IMAGE_REFERENCE'
       serviceAccount: mqtt-ibm-mq
@@ -181,6 +184,8 @@ spec:
                 path: 10-dev.mqsc
               - key: 20-dev-tls.mqsc
                 path: 20-dev-tls.mqsc
+              - key: mqxr_unix.properties
+                path: mqxr_unix.properties
             defaultMode: 420
         - name: openshift-service-ca
           configMap:
