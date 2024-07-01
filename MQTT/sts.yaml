@@ -65,13 +65,13 @@ spec:
             app.kubernetes.io/component: integration
             app.kubernetes.io/instance: mqtt
             app.kubernetes.io/name: ibm-mq
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 2Gi
-          volumeMode: Filesystem
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 2Gi
+            volumeMode: Filesystem
       schedulerName: default-scheduler
       affinity: {}
       terminationGracePeriodSeconds: 30
