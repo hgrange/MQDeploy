@@ -1,0 +1,22 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app.kubernetes.io/component: integration
+    app.kubernetes.io/instance: qm1
+    app.kubernetes.io/name: ibm-mq
+    app.kubernetes.io/version: 9.3.4.0
+  name: mqtt-ibm-mq-web
+  namespace: cp4i
+spec:
+  host: mqtt-ibm-mq-web-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com
+  port:
+    targetPort: 9443
+  tls:
+    termination: passthrough
+  to:
+    kind: Service
+    name: mqtt-ibm-mq
+    weight: 100
+  wildcardPolicy: None
+    
