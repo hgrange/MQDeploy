@@ -109,7 +109,7 @@ spec:
           ports:
             - containerPort: 1414
               protocol: TCP
-            - containerPort: 1833
+            - containerPort: 1883
               protocol: TCP
             - containerPort: 9157
               protocol: TCP
