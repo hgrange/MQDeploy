@@ -16,4 +16,4 @@ spec:
     name: mqtt-ibm-mq
     weight: 100
   port:
-    targetPort: 1833
+    targetPort: 1883
