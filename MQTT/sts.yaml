@@ -23,7 +23,7 @@ spec:
         creationTimestamp: null
         labels:
           app.kubernetes.io/component: integration
-          app.kubernetes.io/instance: orders
+          app.kubernetes.io/instance: mqtt
           app.kubernetes.io/name: ibm-mq
       spec:
         accessModes:
@@ -116,12 +116,12 @@ spec:
             - name: MQ_OIDC_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-client-secret-orders-ibm-mq
+                  name: keycloak-client-secret-mqtt-ibm-mq
                   key: CLIENT_ID
             - name: MQ_OIDC_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-client-secret-orders-ibm-mq
+                  name: keycloak-client-secret-mqtt-ibm-mq
                   key: CLIENT_SECRET
             - name: MQ_OIDC_DISCOVERY_ENDPOINT_URL
               value: 'https://cpfs-opcon-cs-keycloak-service.cp4i.svc:8443/realms/cloudpak/.well-known/openid-configuration'
@@ -168,7 +168,7 @@ spec:
               mountPath: /etc/mqm/pki/trust/openshift-service-ca
           terminationMessagePolicy: File
           image: 'IMAGE_REFERENCE'
-      serviceAccount: orders-ibm-mq
+      serviceAccount: mqtt-ibm-mq
       volumes:
       - name: default
         secret:
