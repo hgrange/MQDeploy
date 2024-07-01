@@ -53,6 +53,17 @@ data:
     SET AUTHREC PROFILE(TO.KAFKA) PRINCIPAL('kafka') OBJTYPE(QUEUE) AUTHADD(PUT,GET,INQ,BROWSE)
     SET AUTHREC PROFILE(FROM.KAFKA) PRINCIPAL('kafka') OBJTYPE(QUEUE) AUTHADD(PUT,GET,INQ,BROWSE)
     REFRESH SECURITY
+  qm-service-component.ini: |   
+    ServiceComponent:
+     Service=AuthorizationService
+     Name=Dev.HtpAuth.Service
+     Module=/opt/mqm/lib64/mqsimpleauth.so
+     ComponentDataSize=0
+    ServiceComponent:
+     Service=AuthorizationService
+     Name=MQSeries.UNIX.auth.service
+     Module=amqzfu
+     ComponentDataSize=0
   tls.ini: |
     Service:
         Name=AuthorizationService
