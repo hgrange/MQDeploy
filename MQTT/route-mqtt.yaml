@@ -1,7 +1,7 @@
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: mqtt-ibm-mq-qmtt
+  name: mqtt-ibm-mq-mqtt
   namespace: cp4i
 
   labels:
