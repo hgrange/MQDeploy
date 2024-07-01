@@ -13,7 +13,7 @@ spec:
   host: mqtt-ibm-mq-qm-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com
   to:
     kind: Service
-    name: mqtt-ibm-mq-mqtt
+    name: mqtt-ibm-mq
     weight: 100
   port:
     targetPort: 1833
