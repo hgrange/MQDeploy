@@ -5,15 +5,15 @@ metadata:
   namespace: NAMESPACE
 data:
   script.mqsc: | 
-    DEF SERVICE(SYSTEM.MQXR.SERVICE) +
-    CONTROL(QMGR) +
-    DESCR('Manages clients using MQXR protocols such as MQTT') SERVTYPE(SERVER) +
-    STARTCMD('+MQ_INSTALL_PATH+/mqxr/bin/runMQXRService.sh') +
-    STARTARG('-m +QMNAME+ -d "+MQ_Q_MGR_DATA_PATH+" -g "+MQ_DATA_PATH+" -sf "[DEFAULT]"') +
-    STOPCMD('+MQ_INSTALL_PATH+/mqxr/bin/endMQXRService.sh') +
-    STOPARG('-m +QMNAME+ -d "+MQ_Q_MGR_DATA_PATH+" -g "+MQ_DATA_PATH+"') +
-    STDOUT('+MQ_Q_MGR_DATA_PATH+/mqxr.stdout') +
-    STDERR('+MQ_Q_MGR_DATA_PATH+/mqxr.stderr')
+    * DEF SERVICE(SYSTEM.MQXR.SERVICE) +
+    * CONTROL(QMGR) +
+    * DESCR('Manages clients using MQXR protocols such as MQTT') SERVTYPE(SERVER) +
+    * STARTCMD('+MQ_INSTALL_PATH+/mqxr/bin/runMQXRService.sh') +
+    * STARTARG('-m +QMNAME+ -d "+MQ_Q_MGR_DATA_PATH+" -g "+MQ_DATA_PATH+" -sf "[DEFAULT]"') +
+    * STOPCMD('+MQ_INSTALL_PATH+/mqxr/bin/endMQXRService.sh') +
+    * STOPARG('-m +QMNAME+ -d "+MQ_Q_MGR_DATA_PATH+" -g "+MQ_DATA_PATH+"') +
+    * STDOUT('+MQ_Q_MGR_DATA_PATH+/mqxr.stdout') +
+    * STDERR('+MQ_Q_MGR_DATA_PATH+/mqxr.stderr')
     
     DEFINE QLOCAL('SYSTEM.MQTT.TRANSMIT.QUEUE') USAGE(XMITQ) MAXDEPTH(100000)
     ALTER QMGR DEFXMITQ('SYSTEM.MQTT.TRANSMIT.QUEUE')
