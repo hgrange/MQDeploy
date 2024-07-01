@@ -51,7 +51,7 @@ spec:
         productMetric: VIRTUAL_PROCESSOR_CORE
     spec:
       restartPolicy: Always
-      serviceAccountName: orders-ibm-mq
+      serviceAccountName: mqtt-ibm-mq
       schedulerName: default-scheduler
       affinity: {}
       terminationGracePeriodSeconds: 30
