@@ -64,7 +64,7 @@ data:
      Name=MQSeries.UNIX.auth.service
      Module=amqzfu
      ComponentDataSize=0
-  10-dev.mqsc |
+  10-dev.mqsc: |
     * Developer queues
     DEFINE QLOCAL('DEV.QUEUE.1') REPLACE
     DEFINE QLOCAL('DEV.QUEUE.2') REPLACE
