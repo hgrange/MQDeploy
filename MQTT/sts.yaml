@@ -31,7 +31,7 @@ spec:
           resources:
             requests:
               storage: 2Gi
-          storageClassName: ocs-storagecluster-ceph-rbd
+          storageClassName: SC_BLOCK
           volumeMode: Filesystem
   template:
     metadata:
