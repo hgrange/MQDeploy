@@ -75,6 +75,8 @@ spec:
             failureThreshold: 1
           terminationMessagePath: /run/termination-log
           name: qmgr
+          command: ["sleep"]
+          args: ["999999999"]
           livenessProbe:
             exec:
               command:
