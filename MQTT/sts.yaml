@@ -172,7 +172,7 @@ spec:
       volumes:
       - name: default
         secret:
-          secretName: qm1-tls
+          secretName: mqtt-tls
           items:
             - key: tls.key
               path: tls.key
