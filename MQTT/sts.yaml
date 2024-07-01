@@ -94,8 +94,6 @@ spec:
               value: mqtt-ibm-mq-qm-cp4i.apps.66757b21465837001f61389f.cloud.techzone.ibm.com
             - name: MQ_CONSOLE_DEFAULT_CCDT_PORT
               value: '443'
-            - name: MQ_CP4I_SERVICES_URL
-              value: 'https://icp4i-services-cp4i.cp4i.svc:3000'
             - name: MQ_ENABLE_OPEN_TRACING
               value: 'false'
             - name: MQ_ENABLE_INSTANA_TRACING
@@ -105,7 +103,7 @@ spec:
               drop:
                 - ALL
             privileged: false
-            runAsNonRoot: true
+            runAsNonRoot: false
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: false
           ports:
