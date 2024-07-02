@@ -71,7 +71,7 @@ data:
   20-dev-tls.mqsc: |
   
   10-dev.mqsc: |
-       * Developer connection authentication
+    * Developer connection authentication
     DEFINE AUTHINFO('DEV.AUTHINFO') AUTHTYPE(IDPWOS) CHCKCLNT(REQDADM) CHCKLOCL(OPTIONAL) ADOPTCTX(YES) REPLACE
     ALTER QMGR CONNAUTH('DEV.AUTHINFO')
     REFRESH SECURITY(*) TYPE(CONNAUTH)
