@@ -176,7 +176,7 @@ spec:
             defaultMode: 288
         - name: cm-mqtt-config
           configMap:
-            name: mqtt-config
+            name: cm-mqtt-config
             items:
               - key: script.mqsc
                 path: script.mqsc
