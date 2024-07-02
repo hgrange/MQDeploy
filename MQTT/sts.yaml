@@ -117,6 +117,10 @@ spec:
               protocol: TCP
           imagePullPolicy: IfNotPresent
           volumeMounts:
+            - mountPath: /etc/mqm/web/installations/Installation1/servers/mqweb/mqwebuser.xml
+              name: cm-mqtt-ibm-mq-web
+              readOnly: true
+              subPath: mqwebuser.xml
             - name: tlsdefault
               readOnly: true
               mountPath: /etc/mqm/pki/keys/default
