@@ -39,5 +39,5 @@ oc delete sa mqtt-ibm-mq
 oc delete route mqtt-ibm-mq-qmtt mqtt-ibm-mq-web mqtt-ibm-mq-qm
 
 oc delete cm cm-mqtt-config mqtt-ibm-mq-web
-#oc delete secret mqtt-tls
-#oc create secret generic mqtt-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/mqtt.key --from-file=tls.crt=MQ/tls/mqtt.crt --from-file=ca.crt=MQ/tls/ca.crt --from-file=tls.p12=MQ/tls/mqtt.p12 --from-literal password=password
+oc delete secret mqtt-tls
+oc create secret generic mqtt-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/mqtt.key --from-file=tls.crt=MQ/tls/mqtt.crt --from-file=ca.crt=MQ/tls/ca.crt --from-file=tls.p12=MQ/tls/mqtt.p12 --from-literal password=password
