@@ -42,10 +42,10 @@ spec:
     trust:
       - name: trust
         secret:
-          secretName: qm1-app1-tls
+          secretName: qm1-tls
           items:
-            - app1.key
-            - app1.crt
+            - tls.key
+            - tls.crt
             - ca.crt
   web:
     console:
