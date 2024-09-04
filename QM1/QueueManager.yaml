@@ -29,7 +29,7 @@ spec:
           items:
             - script.mqsc
           name: qm1-config
-  version: 9.3.4.0-r1
+  version: 9.4.0.0-r3
   pki:
     keys:
       - name: default
@@ -43,10 +43,10 @@ spec:
       - name: qm1-app1-tls
         secret:
           secretName: qm1-tls
-            items:
-              - app1.key
-              - app1.crt
-              - ca.crt
+          items:
+            - app1.key
+            - app1.crt
+            - ca.crt
   web:
     console:
       authentication:
