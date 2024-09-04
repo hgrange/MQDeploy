@@ -39,6 +39,14 @@ spec:
             - tls.key
             - tls.crt
             - ca.crt
+    trust:
+      - name: qm1-app1-tls
+        secret:
+          secretName: qm1-tls
+            items:
+              - app1.key
+              - app1.crt
+              - ca.crt
   web:
     console:
       authentication:
