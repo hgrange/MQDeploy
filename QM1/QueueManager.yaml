@@ -8,7 +8,7 @@ metadata:
 spec:
   license:
     accept: true
-    license: L-VTPK-22YZPK
+    license: L-JTPV-KYG8TF
     use: NonProduction
     metric: VirtualProcessorCore
   queueManager:
