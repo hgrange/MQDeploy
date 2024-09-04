@@ -29,7 +29,7 @@ spec:
           items:
             - script.mqsc
           name: qm1-config
-            - mqtt.mqsc
+            - script.mqsc
           name: qm1-mqtt
   version: 9.3.4.0-r1
   pki:
