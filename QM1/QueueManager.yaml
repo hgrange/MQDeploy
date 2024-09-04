@@ -32,7 +32,7 @@ spec:
   version: 9.4.0.0-r3
   pki:
     keys:
-      - name: default
+      - name: private
         secret:
           secretName: qm1-tls
           items:
@@ -40,9 +40,9 @@ spec:
             - tls.crt
             - ca.crt
     trust:
-      - name: qm1-app1-tls
+      - name: trust
         secret:
-          secretName: qm1-tls
+          secretName: qm1-app1-tls
           items:
             - app1.key
             - app1.crt
