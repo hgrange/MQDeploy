@@ -13,7 +13,7 @@ openssl req -new -nodes -out MQ/tls/qm1.csr -newkey rsa:4096 -keyout MQ/tls/qm1.
 openssl x509 -req -in MQ/tls/qm1.csr -CA MQ/tls/ca.crt -CAkey MQ/tls/ca.key -CAcreateserial -out MQ/tls/qm1.crt -days 396 -sha512
 
 # Create a Kubernetes secret with the queue manager key and certificate
-oc delete secret mq-qm1-tls
+oc delete secret qm1-tls
 oc create secret generic qm1-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/qm1.key --from-file=tls.crt=MQ/tls/qm1.crt --from-file=ca.crt=MQ/tls/ca.crt 
 
 #Create a private key and certificate signing request for an application
