@@ -30,6 +30,7 @@ openssl pkcs12 -export -in "MQ/tls/qm1.crt" -name "ibmwebspheremqqm1" -certfile 
 oc delete secret qm1-app1-tls
 oc create secret generic qm1-app1-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/app1.key --from-file=tls.crt=MQ/tls/app1.crt --from-file=ca.crt=MQ/tls/ca.crt --from-file=tls.p12=MQ/tls/app1.p12 --from-literal password=password
 oc delete queuemanager qm1
+oc delete sa qm1-ibm-mq
 oc delete secret qm1-mqm-tls
 oc create secret generic qm1-mqm-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/mqm.key --from-file=tls.crt=MQ/tls/mqm.crt --from-file=ca.crt=MQ/tls/ca.crt --from-file=tls.p12=MQ/tls/mqm.p12 --from-literal password=password
 oc delete secret qm1-tls
