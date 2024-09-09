@@ -31,11 +31,9 @@ oc delete secret qm1-mqm-tls
 oc delete secret qm1-tls
 oc delete secret qm1-app1-tls
 oc delete pvc data-qm1-ibm-mq-0 data-qm1-ibm-mq-1 data-qm1-ibm-mq-2
-oc delete delete cm qm1-config
+oc delete cm qm1-config
 
 # Create a Kubernetes secret with the queue manager key and certificate
-oc create secret generic qm1-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/qm1.key --from-file=tls.crt=MQ/tls/qm1.crt --from-file=ca.crt=MQ/tls/ca.crt 
-
 
 oc create secret generic qm1-app1-tls -n NAMESPACE --type="kubernetes.io/tls" --from-file=tls.key=MQ/tls/app1.key --from-file=tls.crt=MQ/tls/app1.crt --from-file=ca.crt=MQ/tls/ca.crt --from-file=tls.p12=MQ/tls/app1.p12 --from-literal password=password
 
