@@ -1,1 +1,1 @@
-oc get routes -n NAMESPACE
+oc get routes -n NAMESPACE | grep qm1
