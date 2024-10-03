@@ -1,1 +1,1 @@
-oc get routes -n NAMESPACE | grep qm1
+oc get queuemanager qm1 -o yaml -n NAMESPACE 
