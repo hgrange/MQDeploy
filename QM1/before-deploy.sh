@@ -23,7 +23,7 @@ openssl x509 -req -in MQ/tls/mqm.csr -CA MQ/tls/ca.crt -CAkey MQ/tls/ca.key -CAc
 openssl pkcs12 -export -in "MQ/tls/app1.crt" -name "app1" -certfile "MQ/tls/ca.crt" -inkey "MQ/tls/app1.key" -out "MQ/tls/app1.p12" -passout pass:password
 openssl pkcs12 -export -in "MQ/tls/mqm.crt" -name "mqm" -certfile "MQ/tls/ca.crt" -inkey "MQ/tls/mqm.key" -out "MQ/tls/mqm.p12" -passout pass:password
 openssl pkcs12 -export -in "MQ/tls/qm1.crt" -name "ibmwebspheremqqm1" -certfile "MQ/tls/ca.crt" -inkey "MQ/tls/qm1.key" -out "MQ/tls/qm1.p12" -passout pass:password
-
+keytool -v -import -file qm1.cert  -alias ibmwebspheremqqm1 -keystore MQ/tls//app1.p12 -storepass password
 
 oc delete queuemanager qm1
 oc delete sa qm1-ibm-mq
