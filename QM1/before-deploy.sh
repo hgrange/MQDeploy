@@ -8,6 +8,7 @@ openssl req -x509 -new -nodes -key MQ/tls/ca.key -sha512 -days 397 -subj "/CN=se
 
 # Create a private key and certificate signing request for a queue manager
 domain=$(oc whoami --show-server | awk -F: '{ print $2 }' | sed 's|//api.||')
+sleep 99999999999
 openssl req -new -nodes -out MQ/tls/qm1.csr -newkey rsa:4096 -keyout MQ/tls/qm1.key -subj "/CN=qm1-ibm-mq-qm-NAMESPACE.$domain" -addext "subjectAltName = DNS:qm1-ibm-mq-qm-NAMESPACE.$domain"
 # Sign the queue manager key with your internal certificate authority
 openssl x509 -req -in MQ/tls/qm1.csr -CA MQ/tls/ca.crt -CAkey MQ/tls/ca.key -CAcreateserial -out MQ/tls/qm1.crt -days 396 -sha512
