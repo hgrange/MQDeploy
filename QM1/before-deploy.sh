@@ -7,12 +7,12 @@ openssl genpkey -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -out MQ/tls/ca.key
 openssl req -x509 -new -nodes -key MQ/tls/ca.key -sha512 -days 397 -subj "/CN=selfsigned-ca" -out MQ/tls/ca.crt
 
 # Create a private key and certificate signing request for a queue manager
-openssl req -new -nodes -out MQ/tls/qm1.csr -newkey rsa:4096 -keyout MQ/tls/qm1.key -subj '/CN=QM1' -addext "subjectAltName = DNS:qm1-ibm-mq-qm-cp4i.apps.itz-9zfzru.osv.techzone.ibm.com"
+openssl req -new -nodes -out MQ/tls/qm1.csr -newkey rsa:4096 -keyout MQ/tls/qm1.key -subj '/CN=qm1-ibm-mq-qm-cp4i.apps.itz-9zfzru.osv.techzone.ibm.com' -addext "subjectAltName = DNS:qm1-ibm-mq-qm-cp4i.apps.itz-9zfzru.osv.techzone.ibm.com"
 # Sign the queue manager key with your internal certificate authority
 openssl x509 -req -in MQ/tls/qm1.csr -CA MQ/tls/ca.crt -CAkey MQ/tls/ca.key -CAcreateserial -out MQ/tls/qm1.crt -days 396 -sha512
 
 #Create a private key and certificate signing request for an application
-openssl req -new -nodes -out MQ/tls/app1.csr -newkey rsa:4096 -keyout MQ/tls/app1.key -subj '/CN=app1'
+openssl req -new -nodes -out MQ/tls/app1.csr -newkey rsa:4096 -keyout MQ/tls/app1.key -subj '/CN=app1' -addext "subjectAltName = DNS:qm1-ibm-mq-qm-cp4i.apps.itz-9zfzru.osv.techzone.ibm.com"
 openssl req -new -nodes -out MQ/tls/mqm.csr -newkey rsa:4096 -keyout MQ/tls/mqm.key -subj '/CN=mqm'
 
 #create the application certificate with your internal certificate authority
