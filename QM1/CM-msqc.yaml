@@ -50,7 +50,7 @@ data:
         SecurityPolicy=UserExternal
     SSL:
         AllowTLSV13=TRUE
-        OutboundSNI=HOSTNAME
+        OutboundSNI=CHANNEL
         ClientRevocationChecks=DISABLED
         OCSPAuthentication=OPTIONAL
         OCSPCheckExtensions=NO
